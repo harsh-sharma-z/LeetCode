@@ -1,39 +1,31 @@
 class Solution {
-    public int myAtoi(String s) {
-       if (s == null || s.length() < 1)
-		return 0;
- 
-
-	s = s.trim();
- 
-	char flag = '+';
- 
-	int i = 0;
-	if (s.charAt(0) == '-') {
-		flag = '-';
-		i++;
-	} else if (s.charAt(0) == '+') {
-		i++;
-	}
-
-	double result = 0;
- 
-	
-	while (s.length() > i && s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-		result = result * 10 + (s.charAt(i) - '0');
-		i++;
-	}
- 
-	if (flag == '-')
-		result = -result;
- 
-	
-	if (result > Integer.MAX_VALUE)
-		return Integer.MAX_VALUE;
- 
-	if (result < Integer.MIN_VALUE)
-		return Integer.MIN_VALUE;
- 
-	return (int) result;
+    public int myAtoi(String str) {
+       if (str == null || str.length() < 1) {
+            return 0;
+        }
+        final int INT_MAX = 2147483647;
+        final int INT_MIN = -2147483648;
+         str = str.replaceAll("^\\s+", "");
+        int i = 0;
+        boolean isNegative = str.startsWith("-");
+         boolean isPositive = str.startsWith("+");
+        if (isNegative) {
+            i++;
+        } else if (isPositive) {
+            i++;
+        }
+         double number = 0;
+        while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            number = number * 10 + (str.charAt(i) - '0');
+            i++;
+        }
+        number = isNegative ? -number : number;
+        if (number < INT_MIN) {
+            return INT_MIN;
+        }
+        if (number > INT_MAX) {
+            return INT_MAX;
+        }
+        return (int) number;
     }
 }
