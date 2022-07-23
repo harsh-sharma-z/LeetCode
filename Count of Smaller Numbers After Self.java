@@ -1,18 +1,32 @@
 class Solution {
     public List<Integer> countSmaller(int[] nums) {
-        List<Integer> result=new ArrayList<>();
-        int c=0;
-        for(int i=0;i<nums.length;i++) {
-            for(int j=i+1;j<nums.length;j++) {
-                if(nums[j]<nums[i]) {
-                    c++;
-                }
-            }
-            result.add(c);
-            c=0;
+        int min = 20001;
+        int max = -1;
+        for (int num : nums) {
+            min = Math.min(min, num);
+            max = Math.max(max, num);
         }
-        return result;
         
+        min--;
+        int[] count = new int[max-min+1];
+        Integer[] result = new Integer[nums.length];
+        for (int i = nums.length-1; i >=0; i--) {
+            int k = nums[i]-min-1;
+            int c = 0;
+            do {
+                c += count[k];
+                k -= (-k&k);
+            } while (k > 0);
+            result[i] = c;
+            
+            k = nums[i]-min;
+            while (k < count.length) {
+                count[k]++;
+                k += (-k&k);
+            }
+        }
+        
+        return Arrays.asList(result);
         
     }
 }
