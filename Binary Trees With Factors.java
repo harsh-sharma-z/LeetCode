@@ -1,5 +1,5 @@
 class Solution {
-    public int numFactoredBinaryTrees(int[] arr) {
+    public int numFactoredBinaryTrees(int[] A) {
         long res = 0L, mod = (long)1e9 + 7;
         Arrays.sort(A);
         HashMap<Integer, Long> dp = new HashMap<>();
