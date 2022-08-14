@@ -1,83 +1,98 @@
 class Solution {
-   public List<List<String>> findLadders(String start, String end, List<String> wordList) {
-   HashSet<String> dict = new HashSet<String>(wordList);
-   List<List<String>> res = new ArrayList<List<String>>();         
-   HashMap<String, ArrayList<String>> nodeNeighbors = new HashMap<String, ArrayList<String>>();// Neighbors for every node
-   HashMap<String, Integer> distance = new HashMap<String, Integer>();// Distance of every node from the start node
-   ArrayList<String> solution = new ArrayList<String>();
-
-   dict.add(start);          
-   bfs(start, end, dict, nodeNeighbors, distance);                 
-   dfs(start, end, dict, nodeNeighbors, distance, solution, res);   
-   return res;
-}
-
-// BFS: Trace every node's distance from the start node (level by level).
-private void bfs(String start, String end, Set<String> dict, HashMap<String, ArrayList<String>> nodeNeighbors, HashMap<String, Integer> distance) {
-  for (String str : dict)
-      nodeNeighbors.put(str, new ArrayList<String>());
-
-  Queue<String> queue = new LinkedList<String>();
-  queue.offer(start);
-  distance.put(start, 0);
-
-  while (!queue.isEmpty()) {
-      int count = queue.size();
-      boolean foundEnd = false;
-      for (int i = 0; i < count; i++) {
-          String cur = queue.poll();
-          int curDistance = distance.get(cur);                
-          ArrayList<String> neighbors = getNeighbors(cur, dict);
-
-          for (String neighbor : neighbors) {
-              nodeNeighbors.get(cur).add(neighbor);
-              if (!distance.containsKey(neighbor)) {// Check if visited
-                  distance.put(neighbor, curDistance + 1);
-                  if (end.equals(neighbor))// Found the shortest path
-                      foundEnd = true;
-                  else
-                      queue.offer(neighbor);
-                  }
-              }
-          }
-
-          if (foundEnd)
-              break;
-      }
-  }
-
-// Find all next level nodes.    
-private ArrayList<String> getNeighbors(String node, Set<String> dict) {
-  ArrayList<String> res = new ArrayList<String>();
-  char chs[] = node.toCharArray();
-
-  for (char ch ='a'; ch <= 'z'; ch++) {
-      for (int i = 0; i < chs.length; i++) {
-          if (chs[i] == ch) continue;
-          char old_ch = chs[i];
-          chs[i] = ch;
-          if (dict.contains(String.valueOf(chs))) {
-              res.add(String.valueOf(chs));
-          }
-          chs[i] = old_ch;
-      }
-
-  }
-  return res;
-}
-
-// DFS: output all paths with the shortest distance.
-private void dfs(String cur, String end, Set<String> dict, HashMap<String, ArrayList<String>> nodeNeighbors, HashMap<String, Integer> distance, ArrayList<String> solution, List<List<String>> res) {
-    solution.add(cur);
-    if (end.equals(cur)) {
-       res.add(new ArrayList<String>(solution));
-    } else {
-       for (String next : nodeNeighbors.get(cur)) {            
-            if (distance.get(next) == distance.get(cur) + 1) {
-                 dfs(next, end, dict, nodeNeighbors, distance, solution, res);
+    List<List<String>> res;
+    Map<Integer, Set<String>> map;
+    Set<String> set;
+    int goal;
+    String es;
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        res = new LinkedList<>();
+        set = new HashSet<>(wordList);
+        es = endWord;
+        if(!set.contains(endWord)) return(res);
+        int step = 0;
+        Queue<String> q = new LinkedList<>();
+        q.offer(beginWord);
+        Set<String> seen = new HashSet<>();
+        seen.add(beginWord);
+        map = new HashMap<>();
+        boolean found = false;
+        while(!q.isEmpty()){
+            int sz = q.size();
+            map.put(step, new HashSet<>());
+            while(sz-- > 0){
+                String cs = q.poll();
+                map.get(step).add(cs);
+                if(cs.equals(endWord)){
+                    found = true;
+                    break;
+                }
+                Set<String> nbrs = nb(cs, set, seen);
+                for(String ns: nbrs){
+                    q.offer(ns);
+                }
+            }
+            if(found) break;
+            step++;
+        }
+        if(!found) return(res);
+        //System.out.println(step);
+        //System.out.println(map);
+        goal = step;
+        List<String> list = new LinkedList<>();
+        list.add(es);
+        dfs(es, goal, list);
+        return(res);
+    }
+    
+    public void dfs(String s, int level, List<String> list){
+        if(level == 0){
+            List<String> copy = new LinkedList<>(list);
+            Collections.reverse(copy);
+            res.add(copy);
+            return;
+        }
+        Set<String> nbrs = new HashSet<>();
+        for(String nss: map.get(level - 1)){
+            if(isnb(nss, s)) nbrs.add(nss);
+        }
+        for(String ns: nbrs){
+            list.add(ns);
+            dfs(ns, level - 1, list);
+            list.remove(list.size() - 1);
+        }
+    }
+    public boolean isnb(String s1, String s2){
+        int n = s1.length();
+        int d = 0;
+        for(int i = 0; i < n; i++){
+            if(s1.charAt(i) != s2.charAt(i)) d++;
+        }
+        return(d == 1);
+    }
+    public Set<String> nnb(String s, Set<String> set, int dep){
+        Set<String> res = new HashSet<>();
+        int n = s.length();
+        for(int i = 0; i < n; i++){
+            int chi = s.charAt(i) - 'a';
+            for(int j = 0; j < 26; j++){
+                if(j == chi) continue;
+                String ns = s.substring(0, i) + (char)('a' + j) + s.substring(i + 1);
             }
         }
-    }           
-   solution.remove(solution.size() - 1);
-}
+        return(res);
+    }
+    public Set<String> nb(String s, Set<String> set, Set<String> seen){
+        Set<String> res = new HashSet<>();
+        int n = s.length();
+        for(int i = 0; i < n; i++){
+            int chi = s.charAt(i) - 'a';
+            for(int j = 0; j < 26; j++){
+                if(j == chi) continue;
+                String ns = s.substring(0, i) + (char)('a' + j) + s.substring(i + 1);
+                if(set.contains(ns) && seen.add(ns)) res.add(ns);
+                
+            }
+        }
+        return(res);
+    }
 }
