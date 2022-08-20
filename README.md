@@ -16,8 +16,6 @@ All the complexities are also mentioned alongside.
 
 1. [Algorithms and Data structures](#Algorithms-and-Data-structures)
 2. [Contribute](#Contribute)
-3. [Connect with me](#Connect)
-4. [Support me to get more](#Support)
 
 ## Algorithms and Data structures
 * [Programming foundamental](#Programming-foundamentals)
