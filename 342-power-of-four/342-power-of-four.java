@@ -1,8 +1,6 @@
 class Solution {
-    public boolean isPowerOfFour(int n) {
-        if(n<=0) return false;
-       if((n&(n-1))!=0) return false;
-        return (n-1)%3==0;
+    public boolean isPowerOfFour(int num) {
+        return Integer.bitCount(num) == 1 && (Integer.toBinaryString(num).length()-1)%2==0;
         
     }
 }
