@@ -4,10 +4,10 @@ class Solution {
         if(nums==null || nums.length<2)
             return;
         
-        k%=nums.length;
+        k%=nums.length;// because array becomes initial array after n roatations
         
         
-        help(nums,0,nums.length-k-1);
+        help(nums,0,nums.length-k-1); 
         help(nums,nums.length-k,nums.length-1);
         help(nums,0,nums.length-1);
         
