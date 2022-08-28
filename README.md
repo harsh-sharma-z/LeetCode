@@ -11,33 +11,6 @@ All the complexities are also mentioned alongside.
 
 
 
-
-## Index of content
-
-1. [Algorithms and Data structures](#Algorithms-and-Data-structures)
-2. [Contribute](#Contribute)
-
-## Algorithms and Data structures
-* [Programming foundamental](#Programming-foundamentals)
-* [Array](#Array-or-Vector)
-* [Vectors](#Array-or-Vector)
-* [Sorting](#Sorting)
-* [String](#Strings)
-* [Matrix](#Matrix)
-* [Linked List](#Linked-List)
-* [Stack](#Stack)
-* [Queue](#Queue-and-Dequeu)
-* [Set and Multiset](#Set)
-* [Map](#Map)
-* [Heap](#Heap)
-* [Search](#Search)
-* [Tree and BST](#Tree-and-Binary-Search-Tree)
-* [Graph](#Graph)
-* [Math and Bit Magic](#Math-and-BitMagic)
-* [Prime Numbers](#Prime-numbers)
-* [Recursion](#Recursion)
-
-
 ## Contribute
 1. Star the repositor
 2. Fork the repository
