@@ -13,13 +13,13 @@ class Solution {
             pr*=nums[n-i-1];
         }
 
-        int ans[]=new int[n];
+        
 
 
         for(int i=0;i<n;i++)
-        ans[i]=left[i]*right[i];
+        nums[i]=left[i]*right[i];
 
-        return ans;
+        return nums;
         
         
     }
