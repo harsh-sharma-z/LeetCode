@@ -10,6 +10,6 @@ class Solution {
             a=a.trim();
         }
         
-        return a.trim();
+        return a;
     }
 }
