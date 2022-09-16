@@ -1,15 +1,15 @@
 class Solution {
     public int rob(int[] nums) {
-        int Y=0;
-        int N=0;
+        int pick=0;
+        int notpick=0;
         
         for(int i:nums)
         {
-            int temp=N;
-            N=Math.max(Y,N);
-            Y=i+temp;
+            int temp=notpick;
+            notpick=Math.max(pick,notpick);
+            pick=i+temp;
         }
-        return Math.max(Y,N);
+        return Math.max(pick,notpick);
     }
  
 }
