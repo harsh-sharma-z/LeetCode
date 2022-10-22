@@ -1,5 +1,9 @@
 class Solution {
     public String minWindow(String s, String t) {
+          if(s=="" || t=="")
+            return "";
+        if(s==null || t==null)
+            return "";
         String ans="";
         HashMap<Character,Integer> uwu=new HashMap<>();
         for(int i=0;i<t.length();i++)
