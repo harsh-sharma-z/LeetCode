@@ -21,15 +21,11 @@ class Solution {
     private int dfs(TreeNode root , int n)
     {
         if(root==null)
-        {
             return 0;
-        }
         if(root.left==null && root.right==null)
-        {
-            return (n*10)+root.val;
-        }
-        int left=dfs(root.left,n*10+root.val);
-        int right=dfs(root.right,n*10+root.val);
+            return ((n*10)+root.val);
+        int left=dfs(root.left,(n*10)+root.val);
+        int right=dfs(root.right,(n*10)+root.val);
         return left+right;
-    }
+    }   
 }
