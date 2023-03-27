@@ -46,34 +46,25 @@ class Solution
         for(int i=0;i<V;i++)
         {
             if(color[i]==-1)
-            if(check(i,V,adj,color)==false)
+            if(dfs(i,0,adj,color)==false)
             return false;
         }
         return true;
     }
     
-    private boolean check(int start, int V , ArrayList<ArrayList<Integer>> adj, int[] color)
+    private boolean dfs(int start, int col , ArrayList<ArrayList<Integer>> adj, int[] color)
     {
-        Queue<Integer> uwu=new LinkedList<>();
-        uwu.add(start);
-        color[start]=0;
-        while(!uwu.isEmpty())
+        color[start]=col;
+        
+        for(int i: adj.get(start))
         {
-            int node=uwu.peek();
-            uwu.remove();
-            
-            
-            for(int j:adj.get(node))
+            if(color[i]==-1)
             {
-                if(color[j]==-1)
-                {
-                    color[j]=1-color[node];
-                    uwu.add(j);
-                }
-                else
-                 if(color[j]==color[node])
-                 return false;
+                if(dfs(i,1-col,adj,color)==false)
+                return false;
             }
+            else if(color[i]==col)
+            return false;
         }
         return true;
     }
