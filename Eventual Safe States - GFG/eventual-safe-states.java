@@ -44,43 +44,55 @@ class GFG {
 class Solution {
 
     List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+
         // Your code here
-        int[] vis=new int[V];
-        int[] path= new int[V];
-        int[] check=new int[V];
+        List<List<Integer>> rev=new ArrayList<>();
+        
+        for(int i=0;i<V;i++)
+        rev.add(new ArrayList<>());
+        
+        int[] in=new int[V];
+        
+        
         for(int i=0;i<V;i++)
         {
-            if(vis[i]==0)
+            for(int it: adj.get(i))
             {
-                dfs(i,vis,path,check,adj);
+            rev.get(it).add(i);
+            in[i]++;
             }
         }
         
-        List<Integer> ans=new ArrayList<>();
+        Queue<Integer> uwu=new LinkedList<>();
+        
+        List<Integer> safe=new ArrayList<>();
+        
         for(int i=0;i<V;i++)
-        if(check[i]==1)
-        ans.add(i);
-        return ans;
-    }
-    
-    private boolean dfs(int src, int[] vis, int[] path, int[] check, List<List<Integer>> adj)
-    {
-        vis[src]=1;
-        path[src]=1;
-        check[src]=0;
-        for(int i: adj.get(src))
         {
-            if(vis[i]==0)
-            {
-                if(dfs(i,vis,path,check, adj))
-                return true;
-            }
-            else if(path[i]==1)
-            return true;
+            if(in[i]==0)
+            uwu.add(i);
         }
         
-        check[src]=1;
-        path[src]=0;
-        return false;
+        
+        
+        while(!uwu.isEmpty())
+        {
+            int node=uwu.poll();
+            
+            
+            safe.add(node);
+            
+            for(int it: rev.get(node))
+            {
+                in[it]--;
+                
+                if(in[it]==0)
+                uwu.add(it);
+            }
+        }
+        
+        Collections.sort(safe);
+        
+        return safe;
     }
 }
