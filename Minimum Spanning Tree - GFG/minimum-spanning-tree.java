@@ -46,13 +46,10 @@ class Solution{
 	static int spanningTree(int V, int E, int edges[][]){
 	    // Code Here. 
 	    ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
-	    
 	    for(int i=0;i<V;i++)
-	    {
-	        adj.add(new ArrayList<Pair>());
-	    }
+	    adj.add(new ArrayList<Pair>());
 	    
-	    for(int i[]: edges)
+	    for(int i[]:edges)
 	    {
 	        int u=i[0];
 	        int v=i[1];
@@ -60,33 +57,32 @@ class Solution{
 	        adj.get(u).add(new Pair(d,v));
 	        adj.get(v).add(new Pair(d,u));
 	    }
-	    PriorityQueue<Pair> uwu = new PriorityQueue<>((x,y)-> x.distance-y.distance);
-	    int[] vis=new int[V];
-	    uwu.add(new Pair(0,0));
+	    
 	    int sum=0;
-	   // vis[0]=1;
+	    
+	    int[] vis=new int[V];
+	   
+	    
+	    PriorityQueue<Pair> uwu=new PriorityQueue<Pair>((x,y)->x.distance-y.distance);
+	    uwu.add(new Pair(0,0));
 	    
 	    while(!uwu.isEmpty())
 	    {
-	        int dis=uwu.peek().distance;
 	        int node=uwu.peek().node;
+	        int dis=uwu.peek().distance;
 	        uwu.poll();
 	        if(vis[node]==1)
-	        {
-	            continue;
-	        }
-	        
+	        continue;
 	        sum+=dis;
 	        vis[node]=1;
 	        
-	        for(Pair i: adj.get(node))
+	        for(Pair i:adj.get(node))
 	        {
-	            int newdis=i.distance;
 	            int newnode=i.node;
+	            int newdis=i.distance;
+	            
 	            if(vis[newnode]==0)
-	            {
-	                uwu.add(new Pair(newdis,newnode));
-	            }
+	            uwu.add(new Pair(newdis, newnode));
 	        }
 	    }
 	    return sum;
