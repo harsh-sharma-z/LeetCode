@@ -1,66 +1,40 @@
-class Pair{
-    int x;
-    int y;
-    public Pair(int x,int y)
-    {
-        this.x=x;
-        this.y=y;
-    }
-}
 class Solution {
     public int numEnclaves(int[][] grid) {
-        int n=grid.length;
-        int m=grid[0].length;
-        int[][] vis=new int[n][m];
-        Queue<Pair> uwu =new LinkedList<>();
+        int m=grid.length;
+        int n=grid[0].length;
         
-        for(int i=0;i<n;i++)
+        int c=0;
+        
+        for(int i=0;i<m;i++)
         {
-            for(int j=0;j<m;j++)
+            for(int j=0;j<n;j++)
             {
-                if(i==0 || j==0 || i==n-1 || j==m-1)
-                {
-                    if(grid[i][j]==1)
-                    {
-                        uwu.add(new Pair(i,j));
-                        vis[i][j]=1;
-                    }
-                }
+                if(i*j==0 || i==m-1 || j==n-1)
+                    dfs(grid,i,j,m,n);
             }
         }
         
-        int[] delrow={-1,0,1,0};
-        int[] delcol={0,1,0,-1};
-        
-        while(!uwu.isEmpty())
+        for(int i=0;i<m;i++)
         {
-            int row=uwu.peek().x;
-            int col=uwu.peek().y;
-            uwu.remove();
-            
-            for(int i=0;i<4;i++)
-            {
-                int nrow=row+delrow[i];
-                int ncol=col+delcol[i];
-                
-                if(nrow>=0 && nrow<n &&ncol>=0 && ncol<m&& grid[nrow][ncol]==1 && vis[nrow][ncol]==0)
-                {
-                    uwu.add(new Pair(nrow,ncol));
-                    vis[nrow][ncol]=1;
-                }
-            }
+            for(int j=0;j<n;j++)
+                c+=grid[i][j];
         }
+        return c;
         
-        int ans=0;
-        
-        for(int i=0;i<n;i++)
+    }
+    
+    private void dfs(int[][] grid,int row, int col, int m , int n)
+    {
+        if(row>=m || row<0 || col>= n || col<0)
         {
-            for(int j=0;j<m;j++)
-            {
-                if(grid[i][j]==1 && vis[i][j]==0)
-                    ans++;
-            }
+            return;
         }
-        return ans;
+        if(grid[row][col]==0)
+            return ;
+        grid[row][col]=0;
+        dfs(grid,row-1,col,m,n);
+        dfs(grid,row+1,col,m,n);
+        dfs(grid,row,col-1,m,n);
+        dfs(grid,row,col+1,m,n);
     }
 }
