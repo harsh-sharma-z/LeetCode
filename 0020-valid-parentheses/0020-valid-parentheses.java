@@ -12,8 +12,6 @@ class Solution {
             else if(uwu.isEmpty() || uwu.pop()!=c)
                 return false;
         }
-        if(uwu.isEmpty())
-        return true;
-        return false;
+    return uwu.isEmpty();
     }
 }
