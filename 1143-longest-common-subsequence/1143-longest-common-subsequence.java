@@ -2,12 +2,13 @@ class Solution {
     public int longestCommonSubsequence(String text1, String text2) {
         //return lcs(text1,text2,0,0);
         //return lcs2(text1,text2,text1.length()-1, text2.length()-1);
-        int[][] dp=new int[text1.length()+1][text2.length()+1];
+        return lcsBU(text1,text2);
+//         int[][] dp=new int[text1.length()+1][text2.length()+1];
         
-        for(int[] a:dp)
-            Arrays.fill(a,-1);
+//         for(int[] a:dp)
+//             Arrays.fill(a,-1);
         
-        return lcsTD(text1, text2, 0,0, dp);
+//         return lcsTD(text1, text2, 0,0, dp);
         
     }
     private int lcs (String s1, String s2, int i, int j)
@@ -26,7 +27,6 @@ class Solution {
         }
         return ans;
     }
-    
     private int lcs2 (String s1, String s2, int i, int j)
     {
         if(i<0 || j<0)
@@ -42,8 +42,6 @@ class Solution {
         }
         return ans;
     }
-    
-    
     private int lcsTD (String s1, String s2, int i, int j,int[][] dp)
     {
         if(i==s1.length() || j==s2.length())
@@ -61,6 +59,25 @@ class Solution {
         }
         return dp[i][j]=ans;
     }
-    
-    
+    private int lcsBU (String s1, String s2)
+    {
+        int[][] dp=new int[s1.length()+1][s2.length()+1];
+        for(int i=1;i<dp.length;i++)
+        {
+            for(int j=1;j<dp[0].length;j++)
+            {
+                int ans=0;
+                if(s1.charAt(i-1)==s2.charAt(j-1))
+                    ans=1+dp[i-1][j-1];
+                else
+                {
+                    int fs=dp[i-1][j];
+                    int ss=dp[i][j-1];
+                    ans=Math.max(fs,ss);
+                }
+                dp[i][j]=ans;
+            }
+        }
+        return dp[dp.length-1][dp[0].length-1];
+    }
 }
