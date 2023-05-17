@@ -12,26 +12,28 @@ class Solution {
     public int pairSum(ListNode head) {
         ListNode slow=head;
         ListNode fast=head;
-        while(fast.next!=null && fast.next.next!=null)
+        while(fast!=null && fast.next!=null)
         {
             slow=slow.next;
             fast=fast.next.next;
         }
         
-        slow=slow.next;
-        Stack<Integer> uwu=new Stack<>();
+        ListNode agla,prev=null;
         while(slow!=null)
         {
-            uwu.push(slow.val);
-            slow=slow.next;
+            agla=slow.next;
+            slow.next=prev;
+            prev=slow;
+            slow=agla;
         }
 
         int ans=Integer.MIN_VALUE;
 
-        while(!uwu.isEmpty())
+        while(prev!=null)
         {
-            ans=Math.max(ans,head.val+uwu.pop());
+            ans=Math.max(ans,head.val+prev.val);
             head=head.next;
+            prev=prev.next;
         }
         return ans;
         
