@@ -2,18 +2,25 @@ class Solution {
     private int n;
     public String stoneGameIII(int[] stones) {
         n=stones.length;
-        int[] dp=new int[n+1];
+        //int[] dp=new int[n+1];
         // Arrays.fill(dp,-1);
         // int diff=solve(stones,0,dp); //alice-bob;
+        int a=0;//dp[i+1]
+        int b=0;//dp[i+2]
+        int c=0;//dp[i+3]
         for(int i=n-1;i>=0;i--)
         {
-            dp[i]=stones[i]-dp[i+1];
+            int res=Integer.MIN_VALUE;//dp[i]
+            res=Math.max(res,stones[i]-a);
             if(i+2<=n)
-            dp[i]=Math.max(dp[i],stones[i]+stones[i+1]-dp[i+2]);
+            res=Math.max(res,stones[i]+stones[i+1]-b);
             if(i+3<=n)
-            dp[i]=Math.max(dp[i],stones[i]+stones[i+2]+stones[i+1]-dp[i+3]);
+            res=Math.max(res,stones[i]+stones[i+2]+stones[i+1]-c);
+            c=b;
+            b=a;
+            a=res;
         }
-        int diff=dp[0];
+        int diff=a;
         if(diff<0)
         return "Bob";
         else
