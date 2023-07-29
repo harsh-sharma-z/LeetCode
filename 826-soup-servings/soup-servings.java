@@ -1,6 +1,6 @@
 class Solution {
     public double soupServings(int n) {
-        if(n >= 4000)
+        if(n >= 5000)
             return 1.0;
         double[][] dp = new double[n + 1][n + 1];
         for(double i[] : dp)
