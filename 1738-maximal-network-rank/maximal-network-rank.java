@@ -1,19 +1,19 @@
 class Solution {
     public int maximalNetworkRank(int n, int[][] roads) {
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for(int i = 0 ; i < n ; i++)
-            adj.add(new ArrayList<>());
+        int adj[] = new int[n];
+        boolean linked[][] = new boolean[n][n];
         for(int[] i : roads){
             int u = i[0];
             int v = i[1];
-            adj.get(u).add(v);
-            adj.get(v).add(u);
+            adj[u]++;
+            adj[v]++;
+            linked[u][v] = linked[v][u] = true;
         }
         int ans = -1;
         for(int i = 0 ; i < n ; i++){
             for(int j = i + 1 ; j < n ; j++){
-                int rank = adj.get(i).size() + adj.get(j).size();
-                if(adj.get(i).contains(j))
+                int rank = adj[i] + adj[j];
+                if(linked[i][j])
                     rank -- ;
                 ans = Math.max(rank , ans);
             }
