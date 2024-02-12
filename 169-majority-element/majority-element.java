@@ -1,10 +1,10 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        //boyre moore's' algorithm
-        int c = 0 , ans = 0; //count and possible answer
+        // Boyre Moore's Algorithm
+        int c = 0 , ans = 0;
         for(int i : nums){
-            if(c==0) ans = i; //if no possible answer make a new answer
-            c = i == ans ? c + 1 : c - 1; //count inc or dec according to previous possible answer
+            if(c == 0) ans = i;
+            c = ans == i ? c + 1 : c - 1;
         }
         return ans;
     }
