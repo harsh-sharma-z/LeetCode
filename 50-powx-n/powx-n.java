@@ -1,14 +1,27 @@
 class Solution {
     public double myPow(double x, int n) {
-        return solve(x , (long)n);
-    }
-    private double solve(double x , long n){
-        if(n == 0) 
-            return 1;
-        if(n < 0)
-            return solve((1.0)/x , -1 * n);
-        if(n % 2 == 0)
-            return solve(x * x , n/2);
-        return (x*solve(x * x , (n-1)/2));
+        double ans=1.0;
+        
+        long p=n;
+        
+        if(p<0) p=-1*p;
+        
+        while(p>0){
+            if(p%2==1)
+            {
+                ans*=x;
+                p=p-1;
+                
+            }
+            else
+            {
+                x=x*x;
+                p=p/2;
+            }
+        }
+        
+        if(n<0)
+            ans=(double)(1.0)/(double)(ans);
+        return ans;
     }
 }
