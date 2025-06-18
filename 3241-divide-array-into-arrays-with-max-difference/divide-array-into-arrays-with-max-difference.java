@@ -1,20 +1,17 @@
 class Solution {
     public int[][] divideArray(int[] nums, int k) {
-        Arrays.sort(nums);
-        int[][] result = new int[0][0];
-        
-        for (int i = 0; i + 2 < nums.length; ++i) {
-            if (i % 3 == 0) {
-                if (nums[i + 2] - nums[i] <= k) {
-                    int[] triplet = {nums[i], nums[i + 1], nums[i + 2]};
-                    result = Arrays.copyOf(result, result.length + 1);
-                    result[result.length - 1] = triplet;
-                } else {
-                    return new int[0][0];
-                }
+        Arrays.sort(nums); // Sort to group close elements
+        int ptr = 0;
+        int[][] result = new int[nums.length / 3][3];
+
+        for (int[] arr : result) {
+            for (int i = 0; i < 3; i++) {
+                arr[i] = nums[ptr++];
             }
+            // Check the max-min condition
+            if (arr[2] - arr[0] > k) return new int[][]{};
         }
-        
+
         return result;
     }
 }
